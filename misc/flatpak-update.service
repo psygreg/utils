@@ -1,0 +1,13 @@
+[Unit]
+Description=Update all Flatpaks and remove unused runtimes
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/flatpak update -y
+ExecStart=/usr/bin/sleep 2
+ExecStart=/usr/bin/flatpak uninstall --unused -y
+
+[Install]
+WantedBy=multi-user.target
