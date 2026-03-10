@@ -10,8 +10,8 @@ if [ -z "$parent_dir" ] || [ ! -d "$parent_dir" ]; then
     echo "Error: Parent directory '$parent_dir' does not exist."
     exit 2
 fi
-sudo -v
 cfg_name="${path_name##*/}"
+sudo -v
 btrfs subvolume create "$path_name" || { echo "Error: is $parent_dir a btrfs filesystem?."; exit 3; }
 btrfs property set "$path_name" compression zstd
 sudo btrfs subvolume create "$path_name/.snapshots"
