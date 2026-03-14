@@ -1,6 +1,6 @@
 #!/bin/bash
 
-LOGFILE="/home/psygreg/.auto-update.log" # replace psygreg with your username
+LOGFILE="/home/$USER/.auto-update.log"
 
 mkdir -p "$(dirname "$LOGFILE")" # updater
 {
