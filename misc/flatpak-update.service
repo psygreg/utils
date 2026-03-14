@@ -5,9 +5,7 @@ Wants=network-online.target
 
 [Service]
 Type=oneshot
-ExecStart=/usr/bin/flatpak update -y
-ExecStart=/usr/bin/sleep 2
-ExecStart=/usr/bin/flatpak uninstall --unused -y
+ExecStart=/bin/sh -c '/usr/bin/flatpak update -y && sleep 2 && /usr/bin/flatpak uninstall --unused -y'
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=timers.target
