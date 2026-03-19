@@ -20,3 +20,13 @@ sed -i "s|^SUBVOLUME=.*|SUBVOLUME=$path_name|" "$cfg_name"
 sudo mv "$cfg_name" "/etc/snapper/configs/$cfg_name" || { echo "Error: failed to move configuration file to /etc/snapper/configs. Make sure the path name is not repeated."; exit 4; }
 sudo sed -i "s/SNAPPER_CONFIGS=\"\(.*\)\"/SNAPPER_CONFIGS=\"\1 $cfg_name\"/" /etc/default/snapper
 snapper list-configs | grep "$cfg_name" && { echo "Snapper configuration '$cfg_name' created successfully."; exit 0; } || { echo "Error: failed to add '$cfg_name' to SNAPPER_CONFIGS."; exit 5; }
+if ! diff -q snapper-cleanup.timer /usr/lib/systemd/system/snapper-cleanup.timer > /dev/null 2>&1; then
+    sudo cp -f snapper-cleanup.timer /usr/lib/systemd/system/
+else
+    echo "Snapper cleanup timer already patched."
+fi
+if ! diff -q snapper-timeline.timer /usr/lib/systemd/system/snapper-timeline.timer > /dev/null 2>&1; then
+    sudo cp -f snapper-timeline.timer /usr/lib/systemd/system/
+else
+    echo "Snapper timeline timer already patched."
+fi
